@@ -1,0 +1,5 @@
+{
+  "name": "Ubuntu Merge Radar",
+  "description": "A modern, responsive dashboard to track, visualize, and analyze Debian-to-Ubuntu package merges using real-time data.",
+  "requestFramePermissions": []
+}
