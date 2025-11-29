@@ -1,6 +1,6 @@
 # Ubuntu Merge Radar
 
-DISCLAIMER: My intention with this project is to evaluate Google ai studio
+**DISCLAIMER**: My intention with this project is to evaluate Google ai studio
 while doing a fun little project for the Ubuntu Community and learn a few new
 things along the way. I'm not a web developer and can't properly assess the
 quality and maintainability of this application but part of the experiment is to
