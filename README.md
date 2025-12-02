@@ -1,4 +1,5 @@
-# Ubuntu Merge Radar
+
+# Ubuntu Merges Tracker
 
 **DISCLAIMER**: My intention with this project is to evaluate Google ai studio
 while doing a fun little project for the Ubuntu Community and learn a few new
@@ -8,7 +9,7 @@ do this assessment, potentially try copilot to do post ai studio cleanup and
 learn about npm deployment and maybe even snap or charm the final app.
 Feedback welcome!
 
-**Ubuntu Merge Radar** is a specialized dashboard designed for Ubuntu and Debian
+**Ubuntu Merges Tracker** is a specialized dashboard designed for Ubuntu and Debian
 developers. It provides a modern, responsive interface to track, visualize, and
 analyze packages that are pending merge from Debian into Ubuntu.
 

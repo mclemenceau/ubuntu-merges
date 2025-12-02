@@ -1,9 +1,9 @@
 
-# Ubuntu Merge Radar - Design Document
+# Ubuntu Merges Tracker - Design Document
 
 ## Overview
 
-**Ubuntu Merge Radar** is a specialized dashboard designed for Debian and Ubuntu packagers. It tracks the status of packages that are "pending merge" from Debian into Ubuntu. It ingests real-time data from `merges.ubuntu.com`, normalizes it, and provides a modern, interactive interface to visualize workloads, filter by teams/uploaders, and compare version changelogs.
+**Ubuntu Merges Tracker** is a specialized dashboard designed for Debian and Ubuntu packagers. It tracks the status of packages that are "pending merge" from Debian into Ubuntu. It ingests real-time data from `merges.ubuntu.com`, normalizes it, and provides a modern, interactive interface to visualize workloads, filter by teams/uploaders, and compare version changelogs.
 
 ## Architecture
 
@@ -78,4 +78,3 @@ The design strictly follows **Canonical's Branding Guidelines** to ensure the to
 *   **Recharts**: Composable charting library for React.
 *   **Lucide React**: Consistent, clean icon set.
 *   **ES Modules**: The app runs natively in the browser via `index.html` imports, requiring no complex build step for development.
-

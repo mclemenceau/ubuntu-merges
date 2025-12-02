@@ -76,7 +76,7 @@ const App: React.FC = () => {
                </div>
                <div>
                  <span className="text-white font-bold text-xl tracking-tight block leading-none">Ubuntu</span>
-                 <span className="text-[#AEA79F] text-xs font-light tracking-widest uppercase block mt-1">Merge Radar</span>
+                 <span className="text-[#AEA79F] text-xs font-light tracking-widest uppercase block mt-1">Merges Tracker</span>
                </div>
              </div>
            )}
@@ -124,7 +124,7 @@ const App: React.FC = () => {
              <div className="bg-[#E95420] p-1.5 rounded-sm mr-3">
                <Activity className="text-white h-5 w-5" />
              </div>
-             <span className="font-bold">Merge Radar</span>
+             <span className="font-bold">Merges Tracker</span>
            </div>
            <div className="flex space-x-1 bg-[#333333] rounded p-1">
              <button onClick={() => setActiveTab('dashboard')} className={`p-2 rounded ${activeTab === 'dashboard' ? 'bg-[#262626] text-white shadow-sm' : 'text-[#AEA79F]'}`}>

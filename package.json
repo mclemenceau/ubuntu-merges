@@ -1,5 +1,5 @@
 {
-  "name": "ubuntu-merge-radar",
+  "name": "ubuntu-merges-tracker",
   "private": true,
   "version": "0.0.0",
   "type": "module",
