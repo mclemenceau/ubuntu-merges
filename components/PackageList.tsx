@@ -113,16 +113,16 @@ export const PackageList: React.FC<PackageListProps> = ({ data, onSelectPackage,
     let classes = "";
     switch(component) {
       case PackageSet.MAIN:
-        classes = "text-[#E95420] bg-orange-50";
+        classes = "text-[#E95420] bg-orange-100";
         break;
       case PackageSet.UNIVERSE:
-        classes = "text-[#77216F] bg-purple-50";
+        classes = "text-[#77216F] bg-purple-100";
         break;
       case PackageSet.RESTRICTED:
-        classes = "text-yellow-700 bg-yellow-50";
+        classes = "text-yellow-800 bg-yellow-200";
         break;
       case PackageSet.MULTIVERSE:
-        classes = "text-blue-700 bg-blue-50";
+        classes = "text-blue-800 bg-blue-200";
         break;
       default:
         classes = "text-gray-700 bg-gray-100";
@@ -132,6 +132,17 @@ export const PackageList: React.FC<PackageListProps> = ({ data, onSelectPackage,
         {component}
       </span>
     );
+  };
+
+  const getAgeRowClass = (days: number) => {
+    // Green: Fresh (< 2 weeks)
+    if (days < 14) return 'bg-green-50 hover:bg-green-100';
+    // Yellow: Aging (< 2 months)
+    if (days < 60) return 'bg-yellow-50 hover:bg-yellow-100';
+    // Orange: Old (< 6 months)
+    if (days < 180) return 'bg-orange-50 hover:bg-orange-100';
+    // Red: Stale (> 6 months)
+    return 'bg-red-50 hover:bg-red-100';
   };
 
   const SortHeader = ({ field, label, hideOnMobile }: { field: SortField, label: string, hideOnMobile?: boolean }) => (
@@ -253,48 +264,51 @@ export const PackageList: React.FC<PackageListProps> = ({ data, onSelectPackage,
           </thead>
           <tbody className="bg-white divide-y divide-gray-100">
             {currentData.length > 0 ? (
-              currentData.map((pkg) => (
-                <tr 
-                  key={pkg.id} 
-                  onClick={() => onSelectPackage(pkg)}
-                  className="hover:bg-orange-50 cursor-pointer transition-colors group"
-                >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className={`text-sm font-medium ${pkg.name.startsWith('Unknown (') ? 'text-red-500 font-mono text-xs' : 'text-[#262626]'}`}>
-                      {pkg.name}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
-                     {getComponentBadge(pkg.component)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap hidden xl:table-cell">
-                     {pkg.teams.length > 0 ? (
-                       <span className="text-xs text-[#5D5D5D] truncate max-w-[150px] inline-block" title={pkg.teams.join(', ')}>
-                         {pkg.teams[0]} {pkg.teams.length > 1 && `+${pkg.teams.length - 1}`}
-                       </span>
-                     ) : (
-                       <span className="text-xs text-gray-300">-</span>
-                     )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5D5D5D] font-mono hidden sm:table-cell">
-                    {pkg.ubuntuVersion}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5D5D5D] font-mono hidden sm:table-cell">
-                    {pkg.debianVersion}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-[#262626]">
-                    {pkg.age}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5D5D5D] hidden lg:table-cell">
-                     <span className="truncate max-w-[220px] inline-block align-middle" title={pkg.uploader}>
-                       {pkg.uploader !== 'Unknown' ? getUploaderName(pkg.uploader) : <span className="text-gray-300">-</span>}
-                     </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-[#E95420]" />
-                  </td>
-                </tr>
-              ))
+              currentData.map((pkg) => {
+                const ageRowClass = getAgeRowClass(pkg.ageInDays);
+                return (
+                  <tr 
+                    key={pkg.id} 
+                    onClick={() => onSelectPackage(pkg)}
+                    className={`cursor-pointer transition-colors group border-b border-gray-100 last:border-0 ${ageRowClass}`}
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className={`text-sm font-medium ${pkg.name.startsWith('Unknown (') ? 'text-red-500 font-mono text-xs' : 'text-[#262626]'}`}>
+                        {pkg.name}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
+                      {getComponentBadge(pkg.component)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap hidden xl:table-cell">
+                      {pkg.teams.length > 0 ? (
+                        <span className="text-xs text-[#5D5D5D] truncate max-w-[150px] inline-block" title={pkg.teams.join(', ')}>
+                          {pkg.teams[0]} {pkg.teams.length > 1 && `+${pkg.teams.length - 1}`}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-gray-400">-</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5D5D5D] font-mono hidden sm:table-cell">
+                      {pkg.ubuntuVersion}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5D5D5D] font-mono hidden sm:table-cell">
+                      {pkg.debianVersion}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[#262626]">
+                      {pkg.age}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5D5D5D] hidden lg:table-cell">
+                      <span className="truncate max-w-[220px] inline-block align-middle" title={pkg.uploader}>
+                        {pkg.uploader !== 'Unknown' ? getUploaderName(pkg.uploader) : <span className="text-gray-400">-</span>}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-[#E95420]" />
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
                 <td colSpan={8} className="px-6 py-10 text-center text-sm text-gray-500">
