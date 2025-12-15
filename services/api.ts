@@ -15,7 +15,7 @@ const PROXIES = [
 ];
 
 // Fetches AND parses the JSON. If either network or parsing fails, it tries the next proxy.
-const fetchDataWithFallback = async (targetUrl: string): Promise<any> => {
+export const fetchDataWithFallback = async (targetUrl: string): Promise<any> => {
   let lastError: any;
   for (const proxyGen of PROXIES) {
     try {
@@ -38,7 +38,7 @@ const fetchDataWithFallback = async (targetUrl: string): Promise<any> => {
 };
 
 // Fetches raw TEXT. Used for changelogs.
-const fetchTextWithFallback = async (targetUrl: string): Promise<string> => {
+export const fetchTextWithFallback = async (targetUrl: string): Promise<string> => {
   let lastError: any;
   for (const proxyGen of PROXIES) {
     try {
@@ -59,16 +59,20 @@ const fetchTextWithFallback = async (targetUrl: string): Promise<string> => {
 };
 
 // Helper to parse age string to days
-const parseAgeToDays = (ageInput: string | number | undefined): number => {
+export const parseAgeToDays = (ageInput: string | number | undefined): number => {
   if (ageInput === undefined || ageInput === null) return 0;
   
   const str = String(ageInput).toLowerCase().trim();
+  if (str === '') return 0;
+  
+  // Helper to safely parse and round, returning 0 for NaN
+  const safeRound = (value: number): number => isNaN(value) ? 0 : Math.round(value);
   
   // Check for day/week/year suffixes
-  if (str.includes('y')) return Math.round(parseFloat(str) * 365);
-  if (str.includes('mo')) return Math.round(parseFloat(str) * 30); 
-  if (str.includes('w')) return Math.round(parseFloat(str) * 7);
-  if (str.includes('d')) return Math.round(parseFloat(str));
+  if (str.includes('y')) return safeRound(parseFloat(str) * 365);
+  if (str.includes('mo')) return safeRound(parseFloat(str) * 30); 
+  if (str.includes('w')) return safeRound(parseFloat(str) * 7);
+  if (str.includes('d')) return safeRound(parseFloat(str));
   if (str.includes(':')) return 0; // Time format, effectively 0 days
 
   // Try parsing as number directly (assuming days if no unit)
@@ -76,7 +80,7 @@ const parseAgeToDays = (ageInput: string | number | undefined): number => {
   return isNaN(num) ? 0 : Math.round(num);
 };
 
-const normalizeData = (rawData: any, component: PackageSet): MergePackage[] => {
+export const normalizeData = (rawData: any, component: PackageSet): MergePackage[] => {
   let list: any[] = [];
 
   // Handle Dictionary (Object) format: { "pkgName": { ... }, "pkgName2": { ... } }
@@ -175,7 +179,7 @@ export const fetchMergeData = async (): Promise<MergePackage[]> => {
 };
 
 // Helper to extract the single changelog block for the requested version
-const extractChangelogEntry = (fullText: string, targetVersion: string): string => {
+export const extractChangelogEntry = (fullText: string, targetVersion: string): string => {
   const lines = fullText.split('\n');
   let startLine = -1;
   let endLine = -1;
@@ -242,7 +246,7 @@ const extractChangelogEntry = (fullText: string, targetVersion: string): string 
 };
 
 // Helper to check if text looks like a valid changelog (not HTML 404)
-const isValidChangelog = (text: string) => {
+export const isValidChangelog = (text: string) => {
   const trimmed = text.trim().toLowerCase();
   return !trimmed.startsWith('<!doctype') && !trimmed.startsWith('<html') && trimmed.length > 50;
 };

@@ -64,7 +64,7 @@ sudo snap install --channel 24/stable node
         ```
 
 3.  **Open in Browser**:
-    Navigate to `http://localhost:8000` (or the port shown in your terminal).
+    Navigate to `http://localhost:3000` (or the port shown in your terminal).
 
 ## 📊 Data Sources
 
@@ -78,10 +78,32 @@ Team:
 ## 🛠 Tech Stack
 
 *   **Core**: [React 19](https://react.dev/) & [TypeScript](https://www.typescriptlang.org/)
+*   **Build**: [Vite 6](https://vite.dev/) (dev server & production bundler)
 *   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 *   **Visualization**: [Recharts](https://recharts.org/)
 *   **Icons**: [Lucide React](https://lucide.dev/)
-*   **Architecture**: No-Build ES Modules (via `importmap`)
+*   **Testing**: [Vitest](https://vitest.dev/) (unit) & [Playwright](https://playwright.dev/) (E2E)
+
+## 🧪 Testing
+
+The project includes comprehensive test coverage:
+
+### Unit Tests (Vitest)
+```bash
+npm run test:unit          # Run once
+npm run test:unit:watch    # Watch mode
+npm run test:unit:coverage # With coverage report
+npm run test:unit:ui       # Interactive UI
+```
+
+### E2E Tests (Playwright)
+```bash
+npm run test:e2e           # Run headless
+npm run test:e2e:ui        # Interactive UI mode
+npm run test:e2e:headed    # Run with visible browser
+```
+
+**Browsers**: Tests run on Chromium, Firefox, WebKit, and mobile viewports.
 
 ## 🎨 Design
 
