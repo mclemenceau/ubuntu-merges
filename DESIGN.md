@@ -74,7 +74,37 @@ The design strictly follows **Canonical's Branding Guidelines** to ensure the to
 
 *   **React 19**: Core UI library.
 *   **TypeScript**: Type safety, particularly for the Data Models (`MergePackage`).
+*   **Vite 6**: Fast dev server with HMR and production bundler.
 *   **Tailwind CSS**: Utility-first styling for rapid, responsive layout.
 *   **Recharts**: Composable charting library for React.
 *   **Lucide React**: Consistent, clean icon set.
-*   **ES Modules**: The app runs natively in the browser via `index.html` imports, requiring no complex build step for development.
+
+## Testing Architecture
+
+The application includes comprehensive automated testing:
+
+### Unit Tests (Vitest + React Testing Library)
+*   **Location**: `tests/` directory
+*   **Scope**:
+    *   Component rendering and user interactions
+    *   API service functions (data fetching, parsing, normalization)
+    *   Edge cases and error handling
+*   **Configuration**: `vitest.config.ts`
+
+### E2E Tests (Playwright)
+*   **Location**: `e2e/` directory
+*   **Browsers**: Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari
+*   **Scope**:
+    *   Full user workflows (navigation, search, filtering)
+    *   Modal interactions (changelog, comparison)
+    *   Error states and retry functionality
+    *   Responsive design across viewports
+*   **Configuration**: `playwright.config.ts`
+
+### Test Commands
+```bash
+npm run test:unit          # Unit tests
+npm run test:unit:coverage # With coverage report
+npm run test:e2e           # E2E tests (headless)
+npm run test:e2e:ui        # E2E with interactive UI
+```
